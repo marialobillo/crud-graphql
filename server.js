@@ -15,13 +15,19 @@ const schema = new buildSchema(`
         views: Int
     }
 
+    input CourseInput {
+        title: String!
+        views: Int
+    }
+
     type Query {
         getCourses: [Course]
         getCourse(id: ID!): Course
     }
 
     type Mutation {
-        addCourse(title: String!, views: Int): Course
+        addCourse(input: CourseInput): Course
+        updateCourse(id: ID!, input: CourseInput): Course
     }
 `);
 
@@ -39,6 +45,15 @@ const root = {
         const course = { id, title, views };
         courses.push(course);
         return course;
+    },
+    updateCourse({id, title, views}){
+        const courseIndex = courses.findIndex(course => course.id === id);
+        const course = courses[courseIndex];
+
+        const newCourse = Object.assign(course, { title, views });
+        courses[courseIndex] = newCourse;
+
+        return newCourse;
     }
 }
 
