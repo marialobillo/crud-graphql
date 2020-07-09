@@ -34,8 +34,11 @@ const root = {
         const course = courses.find( (course) => id == course.id);
         return course;
     },
-    addCourse(arguments){
-        
+    addCourse({title, views}){
+        const id = String(courses.length + 1);
+        const course = { id, title, views };
+        courses.push(course);
+        return course;
     }
 }
 
