@@ -40,9 +40,9 @@ const root = {
         const course = courses.find( (course) => id == course.id);
         return course;
     },
-    addCourse({title, views}){
+    addCourse({input}){
         const id = String(courses.length + 1);
-        const course = { id, title, views };
+        const course = { id, ...input };
         courses.push(course);
         return course;
     },
@@ -50,7 +50,7 @@ const root = {
         const courseIndex = courses.findIndex(course => course.id === id);
         const course = courses[courseIndex];
 
-        const newCourse = Object.assign(course, { title, views });
+        const newCourse = Object.assign(course, input);
         courses[courseIndex] = newCourse;
 
         return newCourse;
